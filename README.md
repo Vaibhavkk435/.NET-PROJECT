@@ -4,6 +4,9 @@ A modern, responsive Food Delivery application built with **ASP.NET Core 8.0** a
 
 ![Food Delivery App](https://img.shields.io/badge/ASP.NET%20Core-8.0-blue) ![Entity Framework](https://img.shields.io/badge/Entity%20Framework-Core-green) ![SQLite](https://img.shields.io/badge/Database-SQLite-orange)
 
+## 🌐 Live Demo
+https://net-project-db80.onrender.com
+
 ## 🚀 Features
 
 - **🏪 Restaurant Management** - Browse 4 different restaurants
@@ -143,10 +146,6 @@ All images are stored locally in `wwwroot/images/`:
 ### 4. **Docker**
 - Dockerfile included
 - Ready for containerization
-
-## 🌐 Live Demo
-
-[Add your deployment URL here once deployed]
 
 ## 📊 Database Viewer
 

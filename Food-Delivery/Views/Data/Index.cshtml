@@ -1,0 +1,305 @@
+@using FoodDeliveryApp.Models
+@model DataViewModel
+
+@{
+    ViewData["Title"] = "Database Data Viewer";
+}
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-5 fw-bold text-primary">
+                <i class="fas fa-database me-2"></i>Database Data Viewer
+            </h1>
+            <p class="text-muted">View all stored data in your SQLite database</p>
+        </div>
+    </div>
+
+    <!-- Database Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center bg-primary text-white">
+                <div class="card-body">
+                    <i class="fas fa-store fs-1 mb-2"></i>
+                    <h3>@Model.Restaurants.Count</h3>
+                    <p class="mb-0">Restaurants</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <i class="fas fa-hamburger fs-1 mb-2"></i>
+                    <h3>@Model.MenuItems.Count</h3>
+                    <p class="mb-0">Menu Items</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-warning text-dark">
+                <div class="card-body">
+                    <i class="fas fa-receipt fs-1 mb-2"></i>
+                    <h3>@Model.Orders.Count</h3>
+                    <p class="mb-0">Orders</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <i class="fas fa-list fs-1 mb-2"></i>
+                    <h3>@Model.OrderItems.Count</h3>
+                    <p class="mb-0">Order Items</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables -->
+    <div class="row">
+        <!-- Restaurants Table -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-store me-2"></i>Restaurants</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.Restaurants.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Image URL</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var restaurant in Model.Restaurants)
+                                    {
+                                        <tr>
+                                            <td><span class="badge bg-primary">@restaurant.Id</span></td>
+                                            <td><strong>@restaurant.Name</strong></td>
+                                            <td>@restaurant.Address</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(restaurant.ImageUrl))
+                                                {
+                                                    <small class="text-muted">@restaurant.ImageUrl</small>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">No image</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Restaurants" asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-store text-muted fs-1"></i>
+                            <p class="text-muted mt-2">No restaurants found</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Items Table -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-hamburger me-2"></i>Menu Items</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.MenuItems.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Restaurant</th>
+                                        <th>Description</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var menuItem in Model.MenuItems)
+                                    {
+                                        <tr>
+                                            <td><span class="badge bg-success">@menuItem.Id</span></td>
+                                            <td><strong>@menuItem.Name</strong></td>
+                                            <td>
+                                                <span class="badge bg-primary">@(menuItem.Restaurant?.Name ?? "Unknown")</span>
+                                            </td>
+                                            <td>@(menuItem.Description ?? "No description")</td>
+                                            <td><strong class="text-success">₹@menuItem.Price</strong></td>
+                                            <td>
+                                                <a asp-controller="MenuItems" asp-action="Details" asp-route-id="@menuItem.Id" class="btn btn-sm btn-outline-success">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-hamburger text-muted fs-1"></i>
+                            <p class="text-muted mt-2">No menu items found</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="fas fa-receipt me-2"></i>Orders</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.Orders.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Customer Name</th>
+                                        <th>Delivery Address</th>
+                                        <th>Total Amount</th>
+                                        <th>Status</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in Model.Orders)
+                                    {
+                                        <tr>
+                                            <td><span class="badge bg-warning text-dark">@order.Id</span></td>
+                                            <td><strong>@order.CustomerName</strong></td>
+                                            <td>@order.DeliveryAddress</td>
+                                            <td><strong class="text-success">₹@order.Total</strong></td>
+                                            <td><span class="badge bg-info">@order.Status</span></td>
+                                            <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-receipt text-muted fs-1"></i>
+                            <p class="text-muted mt-2">No orders found</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Items Table -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-list me-2"></i>Order Items</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.OrderItems.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Order ID</th>
+                                        <th>Menu Item</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Line Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var orderItem in Model.OrderItems)
+                                    {
+                                        <tr>
+                                            <td><span class="badge bg-info">@orderItem.Id</span></td>
+                                            <td><span class="badge bg-warning text-dark">@orderItem.OrderId</span></td>
+                                            <td><strong>@(orderItem.MenuItem?.Name ?? "Unknown Item")</strong></td>
+                                            <td><span class="badge bg-secondary">@orderItem.Quantity</span></td>
+                                            <td>₹@orderItem.UnitPrice</td>
+                                            <td><strong class="text-success">₹@orderItem.LineTotal</strong></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-list text-muted fs-1"></i>
+                            <p class="text-muted mt-2">No order items found</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JSON API Links -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0"><i class="fas fa-code me-2"></i>JSON API Endpoints</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Access your data as JSON for API consumption:</p>
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <a href="/Data/Restaurants" class="btn btn-outline-primary w-100" target="_blank">
+                                <i class="fas fa-store me-2"></i>Restaurants JSON
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="/Data/MenuItems" class="btn btn-outline-success w-100" target="_blank">
+                                <i class="fas fa-hamburger me-2"></i>Menu Items JSON
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="/Data/Orders" class="btn btn-outline-warning w-100" target="_blank">
+                                <i class="fas fa-receipt me-2"></i>Orders JSON
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="/Data/DatabaseStats" class="btn btn-outline-info w-100" target="_blank">
+                                <i class="fas fa-chart-bar me-2"></i>Database Stats
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

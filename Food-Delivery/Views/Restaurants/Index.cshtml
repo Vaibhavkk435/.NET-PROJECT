@@ -1,0 +1,161 @@
+@model IEnumerable<FoodDeliveryApp.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="display-5 fw-bold">
+                        <i class="fas fa-store text-primary me-2"></i>Restaurants
+                    </h1>
+                    <p class="text-muted">Discover amazing restaurants near you</p>
+                </div>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Add Restaurant
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search restaurants by name or location..." id="restaurantSearch">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" id="sortFilter" style="height: 50px; border-radius: 25px;">
+                <option value="">Sort by...</option>
+                <option value="name">Name (A-Z)</option>
+                <option value="rating">Rating</option>
+                <option value="newest">Newest</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Restaurants Grid -->
+    <div class="row" id="restaurants-grid">
+        @foreach (var restaurant in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4 restaurant-item" data-name="@restaurant.Name.ToLower()" data-address="@restaurant.Address?.ToLower()">
+                <div class="card restaurant-card h-100">
+                    <div class="position-relative">
+                        <img src="@(!string.IsNullOrEmpty(restaurant.ImageUrl) ? restaurant.ImageUrl : "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop")" 
+                             class="card-img-top" alt="@restaurant.Name" style="height: 200px; object-fit: cover;"
+                             onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=250&fit=crop'">
+                        <div class="position-absolute top-0 start-0 m-3">
+                            <span class="badge bg-success">Open</span>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">@restaurant.Name</h5>
+                        <p class="card-text text-muted mb-2">
+                            <i class="fas fa-map-marker-alt me-1"></i>@restaurant.Address
+                        </p>
+                        <div class="rating mb-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ms-1 text-muted">4.5 (120+ reviews)</span>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>30-45 min • 
+                                <i class="fas fa-shipping-fast me-1"></i>Free delivery
+                            </small>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a asp-action="Details" asp-route-id="@restaurant.Id" class="btn btn-primary w-100">
+                                        <i class="fas fa-eye me-1"></i>View
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <div class="dropdown w-100">
+                                        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@restaurant.Id">
+                                                <i class="fas fa-edit me-2"></i>Edit
+                                            </a></li>
+                                            <li><a class="dropdown-item" asp-action="Details" asp-route-id="@restaurant.Id">
+                                                <i class="fas fa-info-circle me-2"></i>Details
+                                            </a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item text-danger" asp-action="Delete" asp-route-id="@restaurant.Id">
+                                                <i class="fas fa-trash me-2"></i>Delete
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-store-slash text-muted" style="font-size: 4rem;"></i>
+            <h3 class="mt-3 text-muted">No restaurants found</h3>
+            <p class="text-muted">Be the first to add a restaurant!</p>
+            <a asp-action="Create" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Add First Restaurant
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Search functionality
+        document.getElementById('restaurantSearch').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const restaurants = document.querySelectorAll('.restaurant-item');
+            
+            restaurants.forEach(restaurant => {
+                const name = restaurant.dataset.name;
+                const address = restaurant.dataset.address;
+                
+                if (name.includes(searchTerm) || address.includes(searchTerm)) {
+                    restaurant.style.display = 'block';
+                } else {
+                    restaurant.style.display = 'none';
+                }
+            });
+        });
+
+        // Sort functionality
+        document.getElementById('sortFilter').addEventListener('change', function() {
+            const sortBy = this.value;
+            const grid = document.getElementById('restaurants-grid');
+            const restaurants = Array.from(document.querySelectorAll('.restaurant-item'));
+            
+            if (!sortBy) return;
+            
+            restaurants.sort((a, b) => {
+                if (sortBy === 'name') {
+                    return a.dataset.name.localeCompare(b.dataset.name);
+                }
+                // Add more sorting options as needed
+                return 0;
+            });
+            
+            restaurants.forEach(restaurant => {
+                grid.appendChild(restaurant);
+            });
+        });
+    </script>
+}

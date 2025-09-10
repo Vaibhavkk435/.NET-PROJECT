@@ -1,0 +1,403 @@
+/* Enhanced Navigation Bar Styles */
+.navbar {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    z-index: 1030;
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.navbar-nav .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    margin: 0 0.2rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-1px);
+}
+
+.navbar-nav .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    font-weight: 600;
+}
+
+.btn-outline-warning {
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+    background: #ffc107;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+}
+
+/* Responsive navbar fixes */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: rgba(0, 123, 255, 0.95);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .navbar-nav .nav-link {
+        text-align: center;
+        margin: 0.2rem 0;
+    }
+    
+    .d-flex.align-items-center {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+}
+
+/* Main content padding adjustment for fixed navbar */
+main {
+    padding-top: 0;
+}
+
+/* Fix for container spacing */
+.container-fluid.px-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Global Styles */
+html {
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+/* Focus Styles */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.8)), 
+              url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3') center/cover;
+  color: white;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+/* Card Styles */
+.restaurant-card, .menu-item-card {
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  height: 100%;
+}
+
+.restaurant-card:hover, .menu-item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover .card-img-top,
+.menu-item-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+/* Button Styles */
+.btn-order {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-order:hover {
+  background: linear-gradient(45deg, #20c997, #28a745);
+  transform: scale(1.05);
+  color: white;
+}
+
+.btn-add-to-cart {
+  background: linear-gradient(45deg, #ff6b35, #f7931e);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-add-to-cart:hover {
+  background: linear-gradient(45deg, #f7931e, #ff6b35);
+  transform: scale(1.05);
+  color: white;
+}
+
+/* Search Bar */
+.search-container {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.search-input {
+  border-radius: 50px;
+  padding: 15px 25px;
+  border: 2px solid #dee2e6;
+  font-size: 1.1rem;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+}
+
+/* Features Section */
+.features-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.feature-box {
+  text-align: center;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Price Badge */
+.price-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Rating Stars */
+.rating {
+  color: #ffc107;
+  font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+  
+  .feature-box {
+    margin-bottom: 20px;
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cart Styles */
+.cart-item {
+  border-bottom: 1px solid #dee2e6;
+  padding: 15px 0;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #dee2e6;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quantity-btn:hover {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Restaurant Details Specific Styles */
+.restaurant-hero {
+    margin-bottom: 2rem;
+}
+
+.info-item {
+    padding: 1rem;
+    border-radius: 8px;
+    background: #f8f9fa;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.feature-item {
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+}
+
+.hours-list {
+    font-size: 0.9rem;
+}
+
+.hours-list .border-bottom:last-child {
+    border-bottom: none !important;
+}
+
+.rating i {
+    font-size: 1.1rem;
+}
+
+/* Enhanced card styles for details page */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border: none;
+    font-weight: 600;
+}
+
+/* Button enhancements */
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+}
+
+/* Restaurant hero overlay */
+.restaurant-hero .position-absolute {
+    border-radius: 15px;
+}
+
+/* Responsive adjustments for restaurant details */
+@media (max-width: 768px) {
+    .restaurant-hero img {
+        height: 250px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .info-item {
+        margin-bottom: 1rem;
+    }
+}
